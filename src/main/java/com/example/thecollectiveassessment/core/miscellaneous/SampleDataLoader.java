@@ -3,29 +3,35 @@ package com.example.thecollectiveassessment.core.miscellaneous;
 import com.example.thecollectiveassessment.core.model.Plant;
 import com.example.thecollectiveassessment.core.repository.PlantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 @Component
 public class SampleDataLoader {
 
     private static PlantRepository repository;
+    private static ClassLoader classLoader;
 
     @Autowired
     public SampleDataLoader(PlantRepository repository) {
         SampleDataLoader.repository = repository;
+        SampleDataLoader.classLoader = getClass().getClassLoader();
     }
 
     public static void readFromFileAndSaveToDB(){
         List<Plant> plants = new ArrayList<>();
         try {
-            File myObj = new File("src/main/resources/sample-data.tsv");
+            InputStream is = SampleDataLoader.class.getClassLoader().getResourceAsStream("sample-data.tsv");
+            BufferedReader myObj = new BufferedReader(new InputStreamReader(Objects.requireNonNull(is)));
+
             Scanner myReader = new Scanner(myObj);
             int i = 0;
             while (myReader.hasNextLine()) {
@@ -42,7 +48,7 @@ public class SampleDataLoader {
                 repository.saveAll(plants);
             }
             System.out.println("Data uploaded: " + i);
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
