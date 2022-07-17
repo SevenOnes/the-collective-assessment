@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  mysql-db:
+    container_name: 'mysql-db'
+    image: 'mysql'
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_PASSWORD=password
+      - MYSQL_USER=mysql
+      - MYSQL_DATABASE=collective
+
+    volumes:
+      - "./mysql"
