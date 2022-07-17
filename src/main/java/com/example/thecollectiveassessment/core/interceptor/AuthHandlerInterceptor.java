@@ -22,6 +22,10 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
 
+        if(request.getRequestURI().contains("swagger")){
+            return true;
+        }
+
         if (request.getHeader("secret-key") == null || !request.getHeader("secret-key").equals("secret-key")) {
             response.getWriter().write("Unauthorized");
             response.setStatus(401);

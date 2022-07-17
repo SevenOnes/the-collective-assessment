@@ -11,12 +11,6 @@ services:
       - MYSQL_USER=mysql
       - MYSQL_DATABASE=collective
 
-#    volumes:
-#      - "./mysql"
-
-#    networks:
-#      - internal-net
-
   collective-app:
     container_name: 'collective-app'
     image: 'collective-assessment'
@@ -26,13 +20,3 @@ services:
       - mysql-db
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/collective?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false
-
-#    volumes:
-#      - "./app"
-
-#    networks:
-#      - internal-net
-#
-#  networks:
-#    internal-net:
-#      driver: bridge
