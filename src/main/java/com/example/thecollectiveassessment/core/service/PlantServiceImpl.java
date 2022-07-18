@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class PlantServiceImpl implements PlantService {
@@ -93,6 +94,11 @@ public class PlantServiceImpl implements PlantService {
         for(Plant plant: plants){
             executor.execute(() -> map.put(plant.getId() + "#" + plant.getName(), Math.round(100.0 * 100 * plant.getGenerationAmount()/totalGeneration)/100.0));
         }
-        executor.shutdown();
+        try {
+            executor.shutdown();
+            while(!executor.awaitTermination(1, TimeUnit.SECONDS)){};
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
     }
 }

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class AuthHandlerInterceptor implements HandlerInterceptor {
 
+    private final String SECRET_KEY_VALUE = "secret-key-value";
+
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object object, Exception arg3) throws Exception {
     }
@@ -26,7 +28,7 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        if (request.getHeader("secret-key") == null || !request.getHeader("secret-key").equals("secret-key")) {
+        if (request.getHeader("secret-key") == null || !request.getHeader("secret-key").equals(SECRET_KEY_VALUE)) {
             response.getWriter().write("Unauthorized");
             response.setStatus(401);
             return false;

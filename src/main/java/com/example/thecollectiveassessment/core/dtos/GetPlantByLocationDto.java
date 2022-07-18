@@ -4,9 +4,11 @@ import com.example.thecollectiveassessment.core.enums.OrderBy;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Accessors(chain = true)
 public class GetPlantByLocationDto extends PaginationDto {
 
     @JsonProperty("limit")

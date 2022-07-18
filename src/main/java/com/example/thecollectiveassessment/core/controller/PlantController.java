@@ -25,8 +25,8 @@ public class PlantController {
     }
 
     @GetMapping("/ping")
-    public String hello() {
-        return "Hello World";
+    public ResponseEntity<String> ping() {
+        return ResponseEntity.ok("Hello World");
     }
 
     @GetMapping("/seed")
